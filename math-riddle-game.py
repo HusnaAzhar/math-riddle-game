@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import tkk
 import random
 
 # Multiple Choice Questions with explanations
