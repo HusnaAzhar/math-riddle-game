@@ -1,5 +1,5 @@
 import tkinter as tk
-from tkinter import ttk  
+from tkinter import ttk
 import random
 
 # Multiple Choice Questions with explanations
@@ -104,13 +104,34 @@ class MathMCQBot:
         self.progress = ttk.Progressbar(self.quiz_frame, length=300, mode='determinate')
         self.progress.pack(pady=10)
 
-        self.percentage_label = tk.Label(self.quiz_frame, text="Progress: 0%", font=("Verdana", 10), bg="#e0f7fa", fg="#004d40")
+        self.percentage_label = tk.Label(self.quiz_frame, text="Progress: 0%", font=("Verdana", 10),
+                                         bg="#e0f7fa", fg="#004d40")
         self.percentage_label.pack()
-
-        self.quiz_title = tk.Label(self.quiz_frame, text="📘 Math Riddle Challenge", font=("Verdana", 18, "bold"), bg="#e0f7fa", fg="#00796B")
+        
+        self.quiz_title = tk.Label(
+            self.quiz_frame,
+            text="📘 Math Riddle Challenge",
+            font=("Verdana", 18, "bold"),
+            bg="#e0f7fa",
+            fg="#00796B"
+        )
         self.quiz_title.pack(pady=(10, 5))
 
-        self.question_label = tk.Label(self.quiz_frame, text="", font=("Verdana", 16, "bold"), wraplength=600, justify="center", bg="white", fg="#004d40", relief="groove", bd=3, padx=10, pady=10)
+
+        self.question_label = tk.Label(
+            self.quiz_frame,
+            text="",
+            font=("Verdana", 16, "bold"),
+            wraplength=600,
+            justify="center",
+            bg="white",  # White background for contrast
+            fg="#004d40",
+            relief="groove",
+            bd=3,
+            padx=10,
+            pady=10
+        )
+
         self.question_label.pack(pady=(10, 10), fill="both", expand=True)
 
         self.option_frame = tk.Frame(self.quiz_frame, bg="#e0f7fa")
@@ -118,7 +139,20 @@ class MathMCQBot:
 
         self.option_buttons = []
         for i in range(4):
-            btn = tk.Button(self.option_frame, text="", width=30, font=("Verdana", 12), bg="#ffffff", fg="#000000", relief="raised", bd=2, activebackground="#e0f7fa", cursor="hand2", command=lambda i=i: self.check_answer(i))
+            btn = tk.Button(
+                self.option_frame,
+                text="",
+                width=30,
+                font=("Verdana", 12),
+                bg="#ffffff",
+                fg="#000000",
+                relief="raised",
+                bd=2,
+                activebackground="#e0f7fa",
+                cursor="hand2",
+                command=lambda i=i: self.check_answer(i)
+            )
+
             btn.pack(pady=5)
             self.option_buttons.append(btn)
 
@@ -128,29 +162,63 @@ class MathMCQBot:
         self.button_frame = tk.Frame(self.quiz_frame, bg="#e0f7fa")
         self.button_frame.pack(pady=10)
 
-        self.hint_button = tk.Button(self.button_frame, text="Hint", command=self.show_hint, bg="#2196F3", fg="white", width=12, font=("Verdana", 11))
+        self.hint_button = tk.Button(self.button_frame, text="Hint", command=self.show_hint,
+                                     bg="#2196F3", fg="white", width=12, font=("Verdana", 11))
         self.hint_button.grid(row=0, column=0, padx=10)
 
-        self.next_button = tk.Button(self.button_frame, text="Next", command=self.next_question, bg="#4CAF50", fg="white", width=12, font=("Verdana", 11))
+        self.next_button = tk.Button(self.button_frame, text="Next", command=self.next_question,
+                                     bg="#4CAF50", fg="white", width=12, font=("Verdana", 11))
         self.next_button.grid(row=0, column=1, padx=10)
 
-        self.end_button = tk.Button(self.button_frame, text="End", command=self.end_game, bg="#F44336", fg="white", width=12, font=("Verdana", 11))
+        self.end_button = tk.Button(self.button_frame, text="End", command=self.end_game,
+                                    bg="#F44336", fg="white", width=12, font=("Verdana", 11))
         self.end_button.grid(row=0, column=2, padx=10)
 
-        self.score_label = tk.Label(self.quiz_frame, text="Score: 0", font=("Verdana", 12, "bold"), bg="#e0f7fa", fg="#00695c")
+        self.score_label = tk.Label(self.quiz_frame, text="Score: 0", font=("Verdana", 12, "bold"),
+                                    bg="#e0f7fa", fg="#00695c")
         self.score_label.pack(pady=5)
 
-        self.feedback_prompt = tk.Label(self.quiz_frame, text="", font=("Verdana", 14, "bold"), bg="#e0f7fa", fg="#004d40", justify="center")
+        # --- FEEDBACK SECTION ---
+        self.feedback_prompt = tk.Label(
+            self.quiz_frame,
+            text="",
+            font=("Verdana", 14, "bold"),
+            bg="#e0f7fa",
+            fg="#004d40",
+            justify="center"
+        )
+
         self.feedback_buttons_frame = tk.Frame(self.quiz_frame, bg="#e0f7fa")
 
         self.feedback_buttons = []
-        feedback_options = [("Good", "😊", "#4CAF50"), ("Neutral", "😐", "#FFC107"), ("Bad", "😞", "#F44336")]
+        feedback_options = [
+            ("Good", "😊", "#4CAF50"),     # Green
+            ("Neutral", "😐", "#FFC107"),  # Yellow
+            ("Bad", "😞", "#F44336")       # Red
+        ]
         for label, emoji, color in feedback_options:
-            btn = tk.Button(self.feedback_buttons_frame, text=f"{emoji} {label}", font=("Verdana", 12, "bold"), width=12, bg=color, fg="white", command=lambda t=label: self.collect_feedback(t))
+            btn = tk.Button(
+                self.feedback_buttons_frame,
+                text=f"{emoji} {label}",
+                font=("Verdana", 12, "bold"),
+                width=12,
+                bg=color,
+                fg="white",
+                command=lambda t=label: self.collect_feedback(t)
+            )
             btn.pack(side="left", padx=15, pady=10)
             self.feedback_buttons.append(btn)
+            
+        self.restart_button = tk.Button(
+            self.quiz_frame,
+            text="🔁 Restart Quiz",
+            font=("Verdana", 12, "bold"),
+            bg="#9C27B0",  # Purple
+            fg="white",
+            width=20,
+            command=self.restart_quiz
+        )
 
-        self.restart_button = tk.Button(self.quiz_frame, text="🔁 Restart Quiz", font=("Verdana", 12, "bold"), bg="#9C27B0", fg="white", width=20, command=self.restart_quiz)
 
     def start_quiz(self):
         self.main_frame.pack_forget()
@@ -172,6 +240,7 @@ class MathMCQBot:
 
         q = self.questions[self.index]
         self.question_label.config(text=f"Q{self.index + 1}: {q['question']}")
+
         for i, choice in enumerate(q["choices"]):
             self.option_buttons[i].config(text=choice, state="normal", bg="#ffffff")
 
@@ -220,25 +289,33 @@ class MathMCQBot:
         self.end_button.config(state="disabled")
         self.progress["value"] = len(self.questions)
         self.percentage_label.config(text="Progress: 100%")
+
+        # Show feedback section
         self.feedback_prompt.config(text="How was your experience with Math Riddle Bot?")
         self.feedback_prompt.pack(pady=(20, 5))
         self.feedback_buttons_frame.pack(pady=(0, 20))
+        
         self.restart_button.pack(pady=(5, 20))
+
 
     def collect_feedback(self, rating):
         self.feedback_prompt.config(text=f"✅ Thanks for your feedback: {rating}!", fg="#2E7D32")
         for btn in self.feedback_buttons:
             btn.config(state="disabled")
-
+            
     def restart_quiz(self):
         self.quiz_frame.pack_forget()
         self.main_frame.pack(fill="both", expand=True)
+
+        # Reset all variables
         self.questions = random.sample(math_mcq_riddles, len(math_mcq_riddles))
         self.score = 0
         self.index = 0
         self.hints_used = 0
         self.used_hint_this_question = False
         self.correct_streak = 0
+
+        # Reset interface
         self.score_label.config(text="Score: 0")
         self.percentage_label.config(text="Progress: 0%")
         self.feedback_label.config(text="")
@@ -248,14 +325,17 @@ class MathMCQBot:
         self.feedback_buttons_frame.pack_forget()
         self.feedback_prompt.pack_forget()
         self.restart_button.pack_forget()
+
         for btn in self.option_buttons:
             btn.config(state="normal")
             btn.pack()
+
         self.hint_button.config(state="normal")
         self.next_button.config(state="normal")
         self.end_button.config(state="normal")
 
 
+        
 # Run the GUI
 root = tk.Tk()
 app = MathMCQBot(root)
